@@ -60,7 +60,8 @@ end
 template '/etc/init.d/go-agent' do
   owner node['go_cd']['user']
   group node['go_cd']['group']
-  source 'agent_init.sh'
+  source 'agent_init.sh.erb'
+  variables(user: node['go_cd']['user'])
   mode 0751
 end
 

@@ -15,7 +15,7 @@ PID_FILE="/var/run/go-agent/go-agent.pid"
 . /etc/default/go-agent
 
 check_proc() {
-    pgrep -u goatos -f /usr/share/go-agent/agent-bootstrapper.jar >/dev/null
+    pgrep -u <%=@user%> -f /usr/share/go-agent/agent-bootstrapper.jar >/dev/null
 }
 
 start_go_agent() {
@@ -24,7 +24,7 @@ start_go_agent() {
        exit -1
     fi
     if [ "$JAVA_HOME" != "" ]; then
-       su - goatos -c /usr/share/go-agent/agent.sh
+       su - <%=@user%> -c /usr/share/go-agent/agent.sh
     else
         echo "set JAVA_HOME"
         exit -1
@@ -52,7 +52,7 @@ go_status() {
 stop_go_agent() {
     check_proc
     if [ $? -eq 0 ]; then
-        pkill -u goatos -f /usr/share/go-agent/agent-bootstrapper.jar
+        pkill -u <%=@user%> -f /usr/share/go-agent/agent-bootstrapper.jar
         until [ $? -ne 0 ]; do
             sleep 1
             check_proc
