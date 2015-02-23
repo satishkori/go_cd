@@ -8,10 +8,10 @@ require 'tempfile'
 require 'fileutils'
 require 'blender'
 require 'blender/chef'
+require 'pry'
 
 module SpecHelper
-  extend self
-  extend Chef::LXCHelper
+  include Chef::LXCHelper
 
   def server
     @server ||= ChefZero::Server.new(host: '10.0.3.1', port: 8889)
@@ -26,31 +26,31 @@ module SpecHelper
   end
 
   def create_container
+    fake_key = server.gen_key_pair.first
     unless  container.defined?
       container.create('download', nil, {}, 0, %w{-a amd64 -r trusty -d ubuntu})
     end
     unless container.running?
-      fake_key = server.gen_key_pair.first
       container.start
-      sleep 5
-      recipe_in_container(container) do
-        execute 'apt-get update -y'
-        package 'openssh-server'
-        remote_file '/opt/chef_12.0.3-1_amd64.deb' do
-          source 'http://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/13.04/x86_64/chef_12.0.3-1_amd64.deb'
-        end
-        dpkg_package 'chef' do
-          source '/opt/chef_12.0.3-1_amd64.deb'
-        end
-        directory '/etc/chef'
-        file '/etc/chef/client.pem' do
-          content fake_key
-        end
-        file '/etc/chef/client.rb' do
-          content "chef_server_url 'http://10.0.3.1:8889'\n"
-        end
-        execute 'echo ubuntu:ubuntu | chpasswd'
+      sleep 15
+    end
+    recipe_in_container(container) do
+      execute 'apt-get update -y'
+      package 'openssh-server'
+      remote_file '/opt/chef_12.0.3-1_amd64.deb' do
+        source 'http://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/13.04/x86_64/chef_12.0.3-1_amd64.deb'
       end
+      dpkg_package 'chef' do
+        source '/opt/chef_12.0.3-1_amd64.deb'
+      end
+      directory '/etc/chef'
+      file '/etc/chef/client.pem' do
+        content fake_key
+      end
+      file '/etc/chef/client.rb' do
+        content "chef_server_url 'http://10.0.3.1:8889'\n"
+      end
+      execute 'echo ubuntu:ubuntu | chpasswd'
     end
   end
 
@@ -95,15 +95,17 @@ module SpecHelper
     end
   end
 end
+RSpec.configure do |config|
+  config.include SpecHelper
+end
 describe 'gocd_server' do
   before do
-    SpecHelper.setup
+    setup
   end
   it 'converge successfully' do
-    SpecHelper.run_chef("recipe[go_cd::server]")
-    SpecHelper.run_chef "recipe[go_cd::server],recipe[go_cd::agent]"
+    run_chef('recipe[go_cd::server],recipe[go_cd::agent]')
   end
   after do
-    SpecHelper.teardown
+    teardown
   end
 end

@@ -3,15 +3,15 @@ zip_name = node['go_cd']['agent_download_url'].split('/').last
 zip_dir = zip_name.sub(/\-\d+.zip/,'')
 zip_path = File.join(Chef::Config[:file_cache_path], zip_name)
 bootstrapper_path = File.join(Chef::Config[:file_cache_path], zip_dir, 'agent-bootstrapper.jar')
-go_server_ip = node['go_cd']['server_ip'],
+go_server_ip = node['go_cd']['server_ip']
 
-%W{
+%w(
   /usr/share/go-agent
   /var/lib/go-agent
   /var/run/go-agent
   /var/log/go-agent
   /var/lib/go-agent/config
-}.each do |dir|
+).each do |dir|
   directory dir do
     owner node['go_cd']['user']
     group node['go_cd']['group']
