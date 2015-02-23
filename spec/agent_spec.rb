@@ -1,25 +1,21 @@
 require 'chefspec'
 describe 'go_cd::agent' do
   cached(:chef_run) do
-    ChefSpec::ServerRunner.new(file_cache_path: '/var/chef/cache') do |node|
-      n = Chef::Node.new
-      n.name('doit')
-      n.set['recipes'] = ['go_cd::server']
-      n.set['ipaddress'] = '1.1.1.1'
-      n.save
+    ChefSpec::SoloRunner.new(file_cache_path: '/var/chef/cache') do |node|
+      node.set['go_cd']['server_ip'] = '1.1.1.1'
     end.converge(described_recipe)
   end
   it 'includes default recipe' do
     expect(chef_run).to include_recipe('go_cd::default')
   end
-  %W{
+  %w(
     /usr/share/go-agent
     /var/lib/go-agent
     /var/run/go-agent
     /var/log/go-agent
     /var/lib/go-agent/config
-  }.each do |dir|
-    it "should create directory #{dir}" do
+  ).each do |dir|
+    it "creates directory #{dir}" do
       expect(chef_run).to create_directory(dir).with(
         owner: 'go',
         group: 'go',
@@ -47,7 +43,7 @@ describe 'go_cd::agent' do
     expect(chef_run).to create_remote_file('/usr/share/go-agent/agent-bootstrapper.jar').with(
       source: 'file:///var/chef/cache/go-agent-14.4.0/agent-bootstrapper.jar',
       owner: 'go',
-      group: 'go',
+      group: 'go'
     )
   end
   it 'creates go-agent environment variable config' do
@@ -68,7 +64,7 @@ describe 'go_cd::agent' do
     expect(chef_run).to create_template('/etc/init.d/go-agent').with(
       owner: 'go',
       group: 'go',
-      source: 'agent_init.sh',
+      source: 'agent_init.sh.erb',
       mode: 0751
     )
   end
@@ -90,10 +86,10 @@ describe 'go_cd::agent' do
   end
   it 'start and enable go-agent service' do
     expect(chef_run).to start_service('go-agent').with(
-      supports:{ status: true}
+      supports: { status: true }
     )
     expect(chef_run).to enable_service('go-agent').with(
-      supports:{ status: true}
+      supports: { status: true }
     )
   end
 end

@@ -2,4 +2,4 @@ default['go_cd']['server_download_url'] = 'http://download.go.cd/gocd-deb/go-ser
 default['go_cd']['agent_download_url'] = 'http://download.go.cd/gocd/go-agent-14.4.0-1356.zip'
 default['go_cd']['user'] = 'go'
 default['go_cd']['group'] = 'go'
-default['go_cd']['server_ip'] = 'localhost'
+default['go_cd']['server_ip'] = '127.0.0.1'
