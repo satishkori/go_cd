@@ -9,8 +9,8 @@ describe 'go_cd::server' do
   end
   it 'download go-server installer using remote file' do
     expect(chef_run).to create_remote_file('/var/chef/cache/go-server.deb').with(
-      source: 'http://download.go.cd/gocd-deb/go-server-14.2.0-377.deb'
-      )
+      source: 'http://download.go.cd/gocd-deb/go-server-14.4.0-1356.deb'
+    )
   end
   it 'install dpkg package go-server' do
     expect(chef_run).to install_dpkg_package('go-server')
