@@ -1,5 +1,6 @@
-default['go_cd']['server_download_url'] = 'http://download.go.cd/gocd-deb/go-server-14.4.0-1356.deb'
 default['go_cd']['agent_download_url'] = 'http://download.go.cd/gocd/go-agent-14.4.0-1356.zip'
+default['go_cd']['apt_repo_uri'] = 'http://download.go.cd/gocd-deb/'
+default['go_cd']['package_version'] = '14.4.0-1356'
 default['go_cd']['user'] = 'go'
 default['go_cd']['group'] = 'go'
 default['go_cd']['server_ip'] = '127.0.0.1'

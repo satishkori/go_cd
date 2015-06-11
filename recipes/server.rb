@@ -2,12 +2,15 @@
 # Recipe:: default
 include_recipe 'go_cd::default'
 
-remote_file "#{Chef::Config[:file_cache_path]}/go-server.deb" do
-  source  node['go_cd']['server_download_url']
+apt_repository 'gocd' do
+  uri node['go_cd']['apt_repo_uri']
+  components ['/']
 end
 
-dpkg_package 'go-server' do
-  source "#{Chef::Config[:file_cache_path]}/go-server.deb"
+package 'go-server' do
+  version node['go_cd']['package_version']
+  options '--force-yes'
+  notifies :restart, 'service[go-server]'
 end
 
 service 'go-server' do
