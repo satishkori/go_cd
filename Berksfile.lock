@@ -1,0 +1,10 @@
+DEPENDENCIES
+  apt
+  go_cd
+    path: .
+    metadata: true
+
+GRAPH
+  apt (2.7.0)
+  go_cd (0.2.0)
+    apt (>= 0.0.0)
