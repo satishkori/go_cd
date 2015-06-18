@@ -24,24 +24,24 @@ describe 'go_cd::agent' do
     end
   end
   it 'download the agent zip file' do
-    zipfile = File.join(Chef::Config[:file_cache_path], 'go-agent-14.4.0-1356.zip')
+    zipfile = File.join(Chef::Config[:file_cache_path], 'go-agent-15.1.0-1863.zip')
     expect(chef_run).to create_remote_file(zipfile).with(
       owner: 'go',
       group: 'go',
-      source: 'http://download.go.cd/gocd/go-agent-14.4.0-1356.zip',
+      source: 'http://download.go.cd/gocd/go-agent-15.1.0-1863.zip',
       mode: 0644
     )
   end
   it 'extracts zip file' do
     expect(chef_run).to run_execute('extract_zip').with(
-      command: 'unzip go-agent-14.4.0-1356.zip',
+      command: 'unzip go-agent-15.1.0-1863.zip',
       cwd: Chef::Config[:file_cache_path],
-      creates: '/var/chef/cache/go-agent-14.4.0/agent-bootstrapper.jar',
+      creates: '/var/chef/cache/go-agent-15.1.0/agent-bootstrapper.jar',
     )
   end
   it 'copy over the bootstrapper jar' do
     expect(chef_run).to create_remote_file('/usr/share/go-agent/agent-bootstrapper.jar').with(
-      source: 'file:///var/chef/cache/go-agent-14.4.0/agent-bootstrapper.jar',
+      source: 'file:///var/chef/cache/go-agent-15.1.0/agent-bootstrapper.jar',
       owner: 'go',
       group: 'go'
     )

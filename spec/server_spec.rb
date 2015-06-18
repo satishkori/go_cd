@@ -1,19 +1,19 @@
 require 'chefspec'
+require 'chefspec/berkshelf'
+
 
 describe 'go_cd::server' do
   cached(:chef_run) do
-    ChefSpec::ServerRunner.new(file_cache_path: '/var/chef/cache').converge(described_recipe)
+    ChefSpec::ServerRunner.new(file_cache_path: '/tmp/chef/cache').converge(described_recipe)
   end
   it 'includes the default recipe' do
     expect(chef_run).to include_recipe('go_cd::default')
   end
-  it 'download go-server installer using remote file' do
-    expect(chef_run).to create_remote_file('/var/chef/cache/go-server.deb').with(
-      source: 'http://download.go.cd/gocd-deb/go-server-14.4.0-1356.deb'
-    )
+  it 'add gocd apt repository' do
+    expect(chef_run).to add_apt_repository('gocd')
   end
-  it 'install dpkg package go-server' do
-    expect(chef_run).to install_dpkg_package('go-server')
+  it 'install package go-server' do
+    expect(chef_run).to install_package('go-server')
   end
   it 'enable go-server service' do
     expect(chef_run).to enable_service('go-server')
