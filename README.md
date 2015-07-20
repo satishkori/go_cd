@@ -16,7 +16,7 @@ node.default['go_cd']['server_ip'] = search(:node, 'name:gocd-server').first.ipa
 include_recipe 'go_cd::agent'
 ```
 
-This cookbook is used along side [container](https://github.com/GoatOS/container) and [xml_file](https://github.com/GoatOS/xml_file) cookbooks to create Continuous Integration servers, capable of running unprivileged LXC containers as part of their [build/test pipelines](https://github.com/GoatOS/GoatOS). An example can be found [here](https://github.com/GoatOS/go_cd/blob/master/spec/lxc_spec.rb) (dogfood :-))
+This cookbook is used along side [container](https://github.com/GoatOS/container) and [xml_file](https://github.com/GoatOS/xml_file) cookbooks to create Continuous Integration servers, capable of running unprivileged LXC containers as part of their [build/test pipelines](https://github.com/GoatOS/GoatOS). An example can be found [here](https://github.com/GoatOS/go_cd/blob/master/functional/lxc_spec.rb) (dogfood :-))
 
 ## License
 [Apache 2](http://www.apache.org/licenses/LICENSE-2.0)
