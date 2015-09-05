@@ -47,7 +47,7 @@ template '/etc/default/go-agent' do
     server_host: go_server_ip,
     server_port: 8153,
     work_dir: '/var/lib/go-agent',
-    java_home: '/usr/lib/jvm/java-7-openjdk-amd64/jre'
+    java_home: node.go_cd.java_home
   )
 end
 
