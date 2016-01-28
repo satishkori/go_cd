@@ -47,6 +47,8 @@ template '/etc/default/go-agent' do
     server_host: go_server_ip,
     server_port: 8153,
     work_dir: '/var/lib/go-agent',
+    agent_mem: node['go_cd']['agent_mem'],
+    agent_max_mem: node['go_cd']['agent_max_mem'],
     java_home: node.go_cd.java_home
   )
 end
