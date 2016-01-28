@@ -3,7 +3,7 @@
 
 ### Description
 This cookbook install and configures ThoughtWorks GoCD server and agent.
-This cookbook is adapted from the othetr community [GoCD cookbook](https://github.com/ketan/thoughtworks-go-cookbooks) to support running agents as custom user.
+This cookbook is adapted from the other community [GoCD cookbook](https://github.com/ketan/thoughtworks-go-cookbooks) to support running agents as custom user.
 
 ### Usage
 
