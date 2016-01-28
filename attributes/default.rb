@@ -1,5 +1,5 @@
 default['go_cd']['agent_download_url'] = 'http://download.go.cd/gocd/go-agent-15.1.0-1863.zip'
-default['go_cd']['apt_repo_uri'] = 'http://download.go.cd/gocd-deb/'
+default['go_cd']['apt_repo_uri'] = 'http://dl.bintray.com/gocd/gocd-deb/'
 default['go_cd']['package_version'] = '15.1.0-1863'
 default['go_cd']['user'] = 'go'
 default['go_cd']['group'] = 'go'
