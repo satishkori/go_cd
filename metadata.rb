@@ -1,6 +1,6 @@
 name             'go_cd'
 maintainer       'Ranjib Dey'
-maintainer_email 'ranjib@linuxc.com'
+maintainer_email 'ranjib@linux.com'
 license          'All rights reserved'
 description      'Installs/Configures go-server'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
