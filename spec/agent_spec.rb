@@ -56,7 +56,9 @@ describe 'go_cd::agent' do
         server_host: '1.1.1.1',
         server_port: 8153,
         work_dir: '/var/lib/go-agent',
-        java_home: '/usr/lib/jvm/java-7-openjdk-amd64/jre'
+        java_home: '/usr/lib/jvm/default-java/jre',
+        agent_mem: '256M',
+        agent_max_mem: '1024M'
       }
     )
   end

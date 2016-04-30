@@ -1,2 +1,2 @@
-package 'openjdk-7-jre'
+package 'default-jre-headless'
 package 'unzip'
