@@ -5,6 +5,7 @@ include_recipe 'go_cd::default'
 apt_repository 'gocd' do
   uri node['go_cd']['apt_repo_uri']
   components ['/']
+  distribution ''
 end
 
 package 'go-server' do
