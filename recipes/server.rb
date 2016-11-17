@@ -6,6 +6,7 @@ apt_repository 'gocd' do
   uri node['go_cd']['apt_repo_uri']
   key node['go_cd']['apt_repo_key'] unless node['go_cd']['apt_repo_key'].nil?
   components ['/']
+  distribution ''
 end
 
 package 'go-server' do
